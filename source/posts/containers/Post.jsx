@@ -34,8 +34,12 @@ class Post extends Component {
   render() {
     return (
       <article id={`post-${this.props.id}`}>
-        <h2>{this.props.title}</h2>
+        <Link to={`/post/${this.props.id}`}>
+          <h2>{this.props.title}</h2>
+        </Link>
+        
         <p>{this.props.body}</p>
+        
         {!this.state.loading && (
           <div>
             <Link to={`/user/${this.state.user.id}`}>

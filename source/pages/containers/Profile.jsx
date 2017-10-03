@@ -33,7 +33,6 @@ class Profile extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <section name="Profile">
         <h2>Profile of {this.state.user.name}</h2>
