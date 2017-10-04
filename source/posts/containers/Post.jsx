@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import api from '../../api.js';
 
+import styles from './Post.css';
+
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -33,19 +35,22 @@ class Post extends Component {
 
   render() {
     return (
-      <article id={`post-${this.props.id}`}>
-        <Link to={`/post/${this.props.id}`}>
-          <h2>{this.props.title}</h2>
-        </Link>
+      <article id={`post-${this.props.id}`} className={styles.post}>
         
-        <p>{this.props.body}</p>
+        <h2 className={styles.title}>
+          <Link to={`/post/${this.props.id}`}>
+            {this.props.title}
+          </Link>
+        </h2>
+        
+        <p className={styles.body}>{this.props.body}</p>
         
         {!this.state.loading && (
-          <div>
-            <Link to={`/user/${this.state.user.id}`}>
+          <div className={styles.meta}>
+            <Link to={`/user/${this.state.user.id}`} className={styles.user}>
               {this.state.user.name}
             </Link>
-            <span>
+            <span className={styles.comments}>
               hay {this.state.comments.length} comentarios
             </span>
           </div>
