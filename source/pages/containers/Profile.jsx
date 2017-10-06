@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component, PropTypes } from 'react';
 
 import Post from '../../posts/containers/Post.jsx';
 
@@ -16,7 +15,11 @@ class Profile extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.initialFetch();
+  }
+
+  async initialFetch() {
     const [
       user,
       posts
@@ -63,6 +66,12 @@ class Profile extends Component {
       </section>
     );
   }
+}
+
+Profile.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.string
+  })
 }
 
 export default Profile;

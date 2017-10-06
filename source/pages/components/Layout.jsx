@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 function Layout(props) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <title>{props.title}</title>
@@ -23,6 +23,11 @@ function Layout(props) {
       </body>
     </html>
   )
+}
+
+Layout.propTypes = {
+  title: PropTypes.string,
+  content: PropTypes.string
 }
 
 export default Layout;

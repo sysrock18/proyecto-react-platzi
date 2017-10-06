@@ -14,7 +14,7 @@ function Header() {
                 <Link to="/" className={styles.link}>
                     Home
                 </Link>
-                <a href="https://platzi.com" target="_blank" className={styles.link}>
+                <a href="https://platzi.com" target="_blank" className={styles.link} rel="noopener noreferrer">
                     Platzi
                 </a>
             </nav>

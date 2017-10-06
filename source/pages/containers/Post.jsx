@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component, PropTypes } from 'react';
 
 import PostBody from '../../posts/containers/Post.jsx';
 import Loading from '../../shared/components/Loading.jsx';
@@ -19,7 +18,11 @@ class Post extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.initialFetch();
+  }
+
+  async initialFetch() {
     const [
       post,
       comments,
@@ -62,6 +65,12 @@ class Post extends Component {
       </section>
     );
   }
+}
+
+Post.propTypes = {
+  params: PropTypes.shape({
+    id: PropTypes.number
+  })
 }
 
 export default Post;

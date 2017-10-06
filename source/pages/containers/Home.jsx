@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import Post from '../../posts/containers/Post.jsx';
 
@@ -21,15 +20,8 @@ class Home extends Component {
     this.handleScroll = this.handleScroll.bind(this);
   }
 
-  async componentDidMount() {
-    const posts = await api.posts.getList(this.state.page);
-
-    this.setState({
-      page: this.state.page + 1,
-      posts,
-      loading: false
-    });
-
+  componentDidMount() {
+    this.initialFetch();
     window.addEventListener('scroll', this.handleScroll);
   }
 
@@ -37,7 +29,17 @@ class Home extends Component {
     window.removeEventListener('scroll', this.handleScroll)
   }
 
-  handleScroll(event) {
+  async initialFetch() {
+    const posts = await api.posts.getList(this.state.page);
+    
+    this.setState({
+      page: this.state.page + 1,
+      posts,
+      loading: false
+    });
+  }
+
+  handleScroll() {
     if(this.state.loading) return null;
 
     const scrolled = window.scrollY;
@@ -48,7 +50,7 @@ class Home extends Component {
       return null;
     }
 
-    this.setState({ loading: true }, async () => {
+    return this.setState({ loading: true }, async () => {
       try {
         const posts = await api.posts.getList(this.state.page);
 
@@ -67,12 +69,6 @@ class Home extends Component {
   render() {
     return (
       <section name="Home" className={styles.section}>
-
-        <h1>Home</h1>
-
-        <Link to="/user/1">
-          Go to Profile
-        </Link>
 
         <section className={styles.list}>
           {this.state.posts

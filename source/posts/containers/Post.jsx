@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import api from '../../api.js';
+import api from '../../api';
 
 import styles from './Post.css';
 
@@ -17,7 +17,11 @@ class Post extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.initialFetch();
+  }
+
+  async initialFetch() {
     const [
       user,
       comments
@@ -64,7 +68,13 @@ Post.propTypes = {
   id: PropTypes.number,
   userId: PropTypes.number,
   title: PropTypes.string,
-  body: PropTypes.string
+  body: PropTypes.string,
+  user: PropTypes.shape({
+    name: PropTypes.string
+  }),
+  comments: PropTypes.arrayOf(
+    PropTypes.object
+  )
 };
 
 export default Post;
