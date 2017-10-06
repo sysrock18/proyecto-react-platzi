@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Loading(){
+function Loading() {
   return (
     <h3>
      Loading data...

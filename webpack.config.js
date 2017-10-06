@@ -3,6 +3,6 @@ const client = require('./webpack/webpack.client.config.js');
 
 module.exports = [
   server,
-  client
+  client,
 ];
 

@@ -7561,15 +7561,18 @@ class Post extends _react.Component {
   }
 }
 
+Post.defaultProps = {
+  user: null
+};
+
 Post.propTypes = {
-  id: _propTypes2.default.number,
-  userId: _propTypes2.default.number,
-  title: _propTypes2.default.string,
-  body: _propTypes2.default.string,
+  id: _propTypes2.default.number.isRequired,
+  userId: _propTypes2.default.number.isRequired,
+  title: _propTypes2.default.string.isRequired,
+  body: _propTypes2.default.string.isRequired,
   user: _propTypes2.default.shape({
     name: _propTypes2.default.string
-  }),
-  comments: _propTypes2.default.arrayOf(_propTypes2.default.object)
+  })
 };
 
 exports.default = Post;
@@ -26786,7 +26789,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _react = __webpack_require__(5);
@@ -26818,31 +26821,31 @@ var _Header2 = _interopRequireDefault(_Header);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Pages() {
-	return _react2.default.createElement(
-		'main',
-		{ role: 'application' },
-		_react2.default.createElement(_Header2.default, null),
-		_react2.default.createElement(
-			_reactRouterDom.Switch,
-			null,
-			_react2.default.createElement(_reactRouterDom.Route, {
-				path: '/',
-				exact: true,
-				component: _Home2.default
-			}),
-			_react2.default.createElement(_reactRouterDom.Route, {
-				path: '/post/:id',
-				exact: true,
-				component: _Post2.default
-			}),
-			_react2.default.createElement(_reactRouterDom.Route, {
-				path: '/user/:id',
-				exact: true,
-				component: _Profile2.default
-			}),
-			_react2.default.createElement(_reactRouterDom.Route, { component: _Error2.default })
-		)
-	);
+  return _react2.default.createElement(
+    'main',
+    { role: 'application' },
+    _react2.default.createElement(_Header2.default, null),
+    _react2.default.createElement(
+      _reactRouterDom.Switch,
+      null,
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/',
+        exact: true,
+        component: _Home2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/post/:id',
+        exact: true,
+        component: _Post2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, {
+        path: '/user/:id',
+        exact: true,
+        component: _Profile2.default
+      }),
+      _react2.default.createElement(_reactRouterDom.Route, { component: _Error2.default })
+    )
+  );
 }
 
 exports.default = Pages;
@@ -26881,7 +26884,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 class Home extends _react.Component {
-
   constructor(props) {
     super(props);
 
@@ -27551,9 +27553,11 @@ class Post extends _react.Component {
 }
 
 Post.propTypes = {
-  params: _react.PropTypes.shape({
-    id: _react.PropTypes.number
-  })
+  match: _react.PropTypes.shape({
+    params: _react.PropTypes.shape({
+      id: _react.PropTypes.string.isRequired
+    })
+  }).isRequired
 };
 
 exports.default = Post;
@@ -27624,8 +27628,14 @@ function Comment(props) {
   );
 }
 
+Comment.defaultProps = {
+  email: '',
+  name: '',
+  body: ''
+};
+
 Comment.propTypes = {
-  id: _react.PropTypes.number,
+  id: _react.PropTypes.number.isRequired,
   email: _react.PropTypes.string,
   name: _react.PropTypes.string,
   body: _react.PropTypes.string
@@ -27742,9 +27752,11 @@ class Profile extends _react.Component {
 }
 
 Profile.propTypes = {
-  params: _react.PropTypes.shape({
-    id: _react.PropTypes.string
-  })
+  match: _react.PropTypes.shape({
+    params: _react.PropTypes.shape({
+      id: _react.PropTypes.string
+    })
+  }).isRequired
 };
 
 exports.default = Profile;
@@ -27795,7 +27807,7 @@ exports.default = Error404;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _react = __webpack_require__(5);
@@ -27811,29 +27823,29 @@ var _Header2 = _interopRequireDefault(_Header);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Header() {
-    return _react2.default.createElement(
-        'header',
-        { className: _Header2.default.header },
-        _react2.default.createElement(
-            'h1',
-            { className: _Header2.default.title },
-            'Curso ReacJS'
-        ),
-        _react2.default.createElement(
-            'nav',
-            { role: 'navigation', className: _Header2.default.navigation },
-            _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: '/', className: _Header2.default.link },
-                'Home'
-            ),
-            _react2.default.createElement(
-                'a',
-                { href: 'https://platzi.com', target: '_blank', className: _Header2.default.link, rel: 'noopener noreferrer' },
-                'Platzi'
-            )
-        )
-    );
+  return _react2.default.createElement(
+    'header',
+    { className: _Header2.default.header },
+    _react2.default.createElement(
+      'h1',
+      { className: _Header2.default.title },
+      'Curso ReacJS'
+    ),
+    _react2.default.createElement(
+      'nav',
+      { className: _Header2.default.navigation },
+      _react2.default.createElement(
+        _reactRouterDom.Link,
+        { to: '/', className: _Header2.default.link },
+        'Home'
+      ),
+      _react2.default.createElement(
+        'a',
+        { href: 'https://platzi.com', target: '_blank', className: _Header2.default.link, rel: 'noopener noreferrer' },
+        'Platzi'
+      )
+    )
+  );
 }
 
 exports.default = Header;

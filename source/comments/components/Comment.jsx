@@ -14,11 +14,17 @@ function Comment(props) {
   );
 }
 
+Comment.defaultProps = {
+  email: '',
+  name: '',
+  body: '',
+};
+
 Comment.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.number.isRequired,
   email: PropTypes.string,
   name: PropTypes.string,
-  body: PropTypes.string
-}
+  body: PropTypes.string,
+};
 
 export default Comment;

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import Post from '../../posts/containers/Post.jsx';
+import Post from '../../posts/containers/Post';
 
-import api from '../../api.js';
+import api from '../../api';
 
 class Profile extends Component {
   constructor(props) {
@@ -11,7 +11,7 @@ class Profile extends Component {
     this.state = {
       user: {},
       posts: [],
-      loading: true
+      loading: true,
     };
   }
 
@@ -22,16 +22,16 @@ class Profile extends Component {
   async initialFetch() {
     const [
       user,
-      posts
+      posts,
     ] = await Promise.all([
       api.users.getSingle(this.props.match.params.id),
-      api.users.getPosts(this.props.match.params.id)
+      api.users.getPosts(this.props.match.params.id),
     ]);
 
     this.setState({
       loading: false,
       user,
-      posts
+      posts,
     });
   }
 
@@ -69,9 +69,11 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.string
-  })
-}
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 export default Profile;

@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 
 function Layout(props) {
   return (
@@ -9,25 +7,25 @@ function Layout(props) {
         <meta charSet="utf-8" />
         <title>{props.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-        <link rel="stylesheet" href="http://localhost:3001/styles.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"/>
+        <link rel="stylesheet" href="http://localhost:3001/styles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
       </head>
       <body>
         <div
           id="render-target"
           dangerouslySetInnerHTML={{
-            __html:"props.content"
+            __html:'props.content'
           }}
         />
         <script src="http://localhost:3001/app.js" />
       </body>
     </html>
-  )
+  );
 }
 
 Layout.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   content: PropTypes.string
-}
+};
 
 export default Layout;

@@ -3,8 +3,8 @@ import React from 'react';
 import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
-import Pages from './pages/containers/Page.jsx';
-import Layout from './pages/components/Layout.jsx';
+import Pages from './pages/containers/Page';
+import Layout from './pages/components/Layout';
 
 function requestHandler(request, response) {
   const context = {};
@@ -12,14 +12,14 @@ function requestHandler(request, response) {
   const html = renderToString(
     <StaticRouter location={request.url}context={context}>
       <Pages />
-    </StaticRouter>
+    </StaticRouter>,
   );
 
   response.setHeader('Content-type', 'text/html');
-  
-  if(context.url) {
+
+  if (context.url) {
     response.writeHead(301, {
-      Location: context.url
+      Location: context.url,
     });
     response.end();
   }
@@ -29,8 +29,8 @@ function requestHandler(request, response) {
       <Layout
         title="Aplicación"
         content={html}
-        />
-    )
+      />,
+    ),
   );
   response.end();
 }

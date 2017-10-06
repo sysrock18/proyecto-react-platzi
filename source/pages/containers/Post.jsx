@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 
-import PostBody from '../../posts/containers/Post.jsx';
-import Loading from '../../shared/components/Loading.jsx';
-import Comment from '../../comments/components/Comment.jsx';
+import PostBody from '../../posts/containers/Post';
+import Loading from '../../shared/components/Loading';
+import Comment from '../../comments/components/Comment';
 
-import api from '../../api.js';
+import api from '../../api';
 
 class Post extends Component {
   constructor(props) {
@@ -14,8 +14,8 @@ class Post extends Component {
       loading: true,
       user: {},
       post: {},
-      comments: []
-    }
+      comments: [],
+    };
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class Post extends Component {
     ]);
 
     const user = await api.users.getSingle(post.userId);
-    
+
     this.setState({
       loading: false,
       post,
@@ -42,8 +42,8 @@ class Post extends Component {
   }
 
   render() {
-    if(this.state.loading) {
-      return <Loading />
+    if (this.state.loading) {
+      return <Loading />;
     }
 
     return (
@@ -53,7 +53,7 @@ class Post extends Component {
           user={this.state.user}
           comments={this.state.comments}
         />
-        
+
         <section>
           {this.state.comments
             .map(comment => (
@@ -68,9 +68,11 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-  params: PropTypes.shape({
-    id: PropTypes.number
-  })
-}
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
+};
 
 export default Post;

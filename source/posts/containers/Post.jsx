@@ -13,8 +13,8 @@ class Post extends Component {
     this.state = {
       loading: true,
       user: props.user || null,
-      comments: []
-    }
+      comments: [],
+    };
   }
 
   componentDidMount() {
@@ -24,31 +24,31 @@ class Post extends Component {
   async initialFetch() {
     const [
       user,
-      comments
+      comments,
     ] = await Promise.all([
       !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
-      api.posts.getComments(this.props.id)
+      api.posts.getComments(this.props.id),
     ]);
 
     this.setState({
       loading: false,
       user: user || this.state.user,
-      comments
+      comments,
     });
   }
 
   render() {
     return (
       <article id={`post-${this.props.id}`} className={styles.post}>
-        
+
         <h2 className={styles.title}>
           <Link to={`/post/${this.props.id}`}>
             {this.props.title}
           </Link>
         </h2>
-        
+
         <p className={styles.body}>{this.props.body}</p>
-        
+
         {!this.state.loading && (
           <div className={styles.meta}>
             <Link to={`/user/${this.state.user.id}`} className={styles.user}>
@@ -64,17 +64,18 @@ class Post extends Component {
   }
 }
 
+Post.defaultProps = {
+  user: null,
+};
+
 Post.propTypes = {
-  id: PropTypes.number,
-  userId: PropTypes.number,
-  title: PropTypes.string,
-  body: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
   user: PropTypes.shape({
-    name: PropTypes.string
+    name: PropTypes.string,
   }),
-  comments: PropTypes.arrayOf(
-    PropTypes.object
-  )
 };
 
 export default Post;
