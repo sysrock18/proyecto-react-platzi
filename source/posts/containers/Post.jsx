@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-
-import api from '../../api';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import styles from './Post.css';
+
+import actions from '../../actions';
 
 class Post extends Component {
   constructor(props) {
@@ -23,18 +25,15 @@ class Post extends Component {
   }
 
   async initialFetch() {
-    const [
-      user,
-      comments,
-    ] = await Promise.all([
-      !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
-      api.posts.getComments(this.props.id),
+    if (!!this.props.user && this.props.comments) return this.setState({ loading: false });
+
+    await Promise.all([
+      this.props.actions.loadUser(this.props.userId),
+      this.props.actions.loadCommentsForPost(this.props.id),
     ]);
 
     this.setState({
       loading: false,
-      user: user || this.state.user,
-      comments,
     });
   }
 
@@ -52,14 +51,14 @@ class Post extends Component {
 
         {!this.state.loading && (
           <div className={styles.meta}>
-            <Link to={`/user/${this.state.user.id}`} className={styles.user}>
-              {this.state.user.name}
+            <Link to={`/user/${this.props.id}`} className={styles.user}>
+              {this.props.user.name}
             </Link>
             <span className={styles.comments}>
               <FormattedMessage
                 id="post.meta.comments"
                 values={{
-                  amount: this.state.comments.length,
+                  amount: this.props.comments.length,
                 }}
               />
             </span>
@@ -83,8 +82,23 @@ Post.propTypes = {
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   user: PropTypes.shape({
+    id: PropTypes.number,
     name: PropTypes.string,
   }),
+  actions: PropTypes.objectOf(PropTypes.func),
 };
 
-export default Post;
+function mapStateToProps(state, props) {
+  return {
+    comments: state.comments.filter(comment => comment.postId === props.id),
+    user: state.users[props.userId],
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
