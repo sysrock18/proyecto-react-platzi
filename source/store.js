@@ -1,8 +1,27 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import createLogger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import reducer from './reducer';
 
-const store = createStore(reducer);
+// Esto es un middleware
+const logger = store => next => (action) => {
+  console.group('logger');
+  console.debug('estado actual: ', store.getState());
+  console.debug('accion', action);
+  const result = next(action);
+  console.debug('estado nuevo', store.getState());
+  console.groupEnd();
+  return result;
+};
+
+const store = createStore(
+  reducer,
+  applyMiddleware(
+    createLogger,
+    thunk,
+  ),
+);
 
 /* store.subscribe(() => {
   const state = store.getState();
