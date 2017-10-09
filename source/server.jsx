@@ -6,6 +6,10 @@ import { StaticRouter } from 'react-router-dom';
 import Pages from './pages/containers/Page';
 import Layout from './pages/components/Layout';
 
+const domain = process.env.NODE_ENV === 'production'
+  ? 'https://simon-platzi-react-sfs.now.sh'
+  : 'http://localhost:3001';
+
 function requestHandler(request, response) {
   const context = {};
 
@@ -29,6 +33,7 @@ function requestHandler(request, response) {
       <Layout
         title="Aplicación"
         content={html}
+        domain={domain}
       />,
     ),
   );
