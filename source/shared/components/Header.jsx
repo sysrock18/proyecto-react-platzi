@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import styles from './Header.css';
 
@@ -7,15 +8,15 @@ function Header() {
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>
-        Curso ReacJS
+        <FormattedMessage id="title" />
       </h1>
 
       <nav className={styles.navigation}>
         <Link to="/" className={styles.link}>
-            Home
+          <FormattedMessage id="header.nav.home" />
         </Link>
         <a href="https://platzi.com" target="_blank" className={styles.link} rel="noopener noreferrer">
-            Platzi
+          <FormattedMessage id="header.nav.platzi" />
         </a>
       </nav>
     </header>
