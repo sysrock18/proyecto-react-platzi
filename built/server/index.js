@@ -22330,7 +22330,9 @@ var _reduxThunk = __webpack_require__(204);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reducer = __webpack_require__(205);
+var _reduxDevtoolsExtension = __webpack_require__(205);
+
+var _reducer = __webpack_require__(206);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -22351,7 +22353,7 @@ var logger = function logger(store) {
   };
 };
 
-var store = (0, _redux.createStore)(_reducer2.default, (0, _redux.applyMiddleware)(_reduxLogger2.default, _reduxThunk2.default));
+var store = (0, _redux.createStore)(_reducer2.default, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxLogger2.default, _reduxThunk2.default)));
 
 /* store.subscribe(() => {
   const state = store.getState();
@@ -22380,6 +22382,12 @@ module.exports = require("redux-thunk");
 
 /***/ }),
 /* 205 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-devtools-extension");
+
+/***/ }),
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22389,9 +22397,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _reduxImmutable = __webpack_require__(206);
+var _reduxImmutable = __webpack_require__(207);
 
-var _immutable = __webpack_require__(207);
+var _immutable = __webpack_require__(208);
 
 var initialState = (0, _immutable.fromJS)({
   posts: {
@@ -22468,13 +22476,13 @@ var reducer = (0, _reduxImmutable.combineReducers)({
 exports.default = reducer;
 
 /***/ }),
-/* 206 */
+/* 207 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-immutable");
 
 /***/ }),
-/* 207 */
+/* 208 */
 /***/ (function(module, exports) {
 
 module.exports = require("immutable");
