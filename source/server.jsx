@@ -23,12 +23,23 @@ function requestHandler(request, response) {
   const html = renderToString(
     <Provider store={store}>
       <IntlProvider locale={locale} messages={messages[locale]}>
-        <StaticRouter location={request.url}context={context}>
+        <StaticRouter location={request.url} context={context}>
           <Pages />
         </StaticRouter>
       </IntlProvider>
     </Provider>,
   );
+
+  let title = '';
+  if (request.url === '/') {
+    title = 'Home';
+  } else if (request.url.substring(0, 6) === '/post/') {
+    title = 'Post';
+  } else if (request.url.substring(0, 6) === '/user/') {
+    title = 'User';
+  } else {
+    title = 'Not Found';
+  }
 
   response.setHeader('Content-type', 'text/html');
 
@@ -42,7 +53,7 @@ function requestHandler(request, response) {
   response.write(
     renderToStaticMarkup(
       <Layout
-        title="Aplicación"
+        title={title}
         content={html}
         domain={domain}
       />,

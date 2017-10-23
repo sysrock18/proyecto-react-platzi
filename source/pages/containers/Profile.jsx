@@ -16,6 +16,9 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    if (typeof window !== 'undefined') {
+      document.title = 'User';
+    }
     this.initialFetch();
   }
 

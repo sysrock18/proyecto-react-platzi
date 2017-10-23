@@ -9415,6 +9415,17 @@ function requestHandler(request, response) {
     )
   ));
 
+  var title = '';
+  if (request.url === '/') {
+    title = 'Home';
+  } else if (request.url.substring(0, 6) === '/post/') {
+    title = 'Post';
+  } else if (request.url.substring(0, 6) === '/user/') {
+    title = 'User';
+  } else {
+    title = 'Not Found';
+  }
+
   response.setHeader('Content-type', 'text/html');
 
   if (context.url) {
@@ -9425,7 +9436,7 @@ function requestHandler(request, response) {
   }
 
   response.write((0, _server.renderToStaticMarkup)(_react2.default.createElement(_Layout2.default, {
-    title: 'Aplicaci\xF3n',
+    title: title,
     content: html,
     domain: domain
   })));
@@ -21445,7 +21456,7 @@ module.exports = '15.6.2';
 /* 187 */
 /***/ (function(module, exports) {
 
-module.exports = {"en":{"error.404":"Go back to home","title":"My first application with React","title.home":"Home","title.profile":"Profile of {name}","profile.field.basic":"Basic info","profile.field.address":"Address","header.nav.home":"Home","header.nav.platzi":"Platzi","comment.meta.author":"By: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comments","post.meta.readMore":"Read more...","loading":"Loading data..."},"es":{"error.404":"Volver al inicio","title":"Mi primera aplicación con React","title.home":"Inicio","title.profile":"Perfil de name}","profile.field.basic":"Información básica","profile.field.address":"Dirección","header.nav.home":"Inicio","header.nav.platzi":"Platzi","comment.meta.author":"Por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comentarios","post.meta.readMore":"Leer más...","loading":"Cargando datos..."}}
+module.exports = {"en":{"error.404":"Go back to home","title":"My first application with React","title.home":"Home","title.profile":"Profile of {name}","profile.field.basic":"Basic info","profile.field.address":"Address","header.nav.home":"Home","header.nav.platzi":"Platzi","comment.meta.author":"By: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comments","post.meta.readMore":"Read more...","loading":"Loading data..."},"es":{"error.404":"Volver al inicio","title":"Mi primera aplicación con React","title.home":"Inicio","title.profile":"Perfil de {name}","profile.field.basic":"Información básica","profile.field.address":"Dirección","header.nav.home":"Inicio","header.nav.platzi":"Platzi","comment.meta.author":"Por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>","post.meta.comments":"{amount} comentarios","post.meta.readMore":"Leer más...","loading":"Cargando datos..."}}
 
 /***/ }),
 /* 188 */
@@ -21497,6 +21508,7 @@ function Pages() {
       _react2.default.createElement(_reactRouterDom.Route, {
         path: '/',
         exact: true,
+        title: 'Home',
         component: _Home2.default
       }),
       _react2.default.createElement(_reactRouterDom.Route, {
@@ -21584,6 +21596,9 @@ var Home = function (_Component) {
   _createClass(Home, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      if (typeof window !== 'undefined') {
+        document.title = 'Home';
+      }
       this.initialFetch();
       window.addEventListener('scroll', this.handleScroll);
     }
@@ -21807,6 +21822,9 @@ var Post = function (_Component) {
   _createClass(Post, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      if (typeof window !== 'undefined') {
+        document.title = 'Post';
+      }
       this.initialFetch();
     }
   }, {
@@ -21972,9 +21990,9 @@ Comment.defaultProps = {
 
 Comment.propTypes = {
   id: _react.PropTypes.number.isRequired,
-  email: _react.PropTypes.string,
-  name: _react.PropTypes.string,
-  body: _react.PropTypes.string
+  email: _react.PropTypes.string.isRequired,
+  name: _react.PropTypes.string.isRequired,
+  body: _react.PropTypes.string.isRequired
 };
 
 exports.default = Comment;
@@ -22039,6 +22057,9 @@ var Profile = function (_Component) {
   _createClass(Profile, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      if (typeof window !== 'undefined') {
+        document.title = 'User';
+      }
       this.initialFetch();
     }
   }, {
@@ -22171,6 +22192,10 @@ var _reactRouterDom = __webpack_require__(24);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Error404() {
+  if (typeof window !== 'undefined') {
+    document.title = 'Not Found';
+  }
+
   return _react2.default.createElement(
     'section',
     { name: 'Error404' },

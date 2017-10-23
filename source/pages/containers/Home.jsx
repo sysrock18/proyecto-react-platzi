@@ -21,6 +21,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    if (typeof window !== 'undefined') {
+      document.title = 'Home';
+    }
     this.initialFetch();
     window.addEventListener('scroll', this.handleScroll);
   }

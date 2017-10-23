@@ -19,6 +19,9 @@ class Post extends Component {
   }
 
   componentDidMount() {
+    if (typeof window !== 'undefined') {
+      document.title = 'Post';
+    }
     this.initialFetch();
   }
 
