@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import PostBody from '../../posts/containers/Post';
 import Loading from '../../shared/components/Loading';
@@ -6,16 +8,13 @@ import Comment from '../../comments/components/Comment';
 
 import api from '../../api';
 
+import actions from '../../actions';
+
 class Post extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      loading: true,
-      user: {},
-      post: {},
-      comments: [],
-    };
+    this.state = { loading: true };
   }
 
   componentDidMount() {
@@ -26,22 +25,16 @@ class Post extends Component {
   }
 
   async initialFetch() {
-    const [
-      post,
-      comments,
-    ] = await Promise.all([
-      api.posts.getSingle(this.props.match.params.id),
-      api.posts.getComments(this.props.match.params.id),
+    if (this.props.post && this.props.comments.size > 0) {
+      return this.setState({ loading: false });
+    }
+
+    await Promise.all([
+      this.props.actions.loadSinglePost(this.props.match.params.id),
+      this.props.actions.loadCommentsForPost(this.props.match.params.id),
     ]);
 
-    const user = await api.users.getSingle(post.userId);
-
-    this.setState({
-      loading: false,
-      post,
-      user,
-      comments,
-    });
+    return this.setState({ loading: false });
   }
 
   render() {
@@ -52,19 +45,17 @@ class Post extends Component {
     return (
       <section name="Post">
         <PostBody
-          {...this.state.post}
-          user={this.state.user}
-          comments={this.state.comments}
+          key={this.props.post.get('id')}
+          {...this.props.post.toJS()}
         />
 
         <section>
-          {this.state.comments
+          {this.props.comments
             .map(comment => (
-              <Comment key={comment.id} {...comment} />
-            ))
+              <Comment key={comment.get('id')} {...comment.toJS()} />
+            )).toArray()
           }
         </section>
-
       </section>
     );
   }
@@ -76,6 +67,20 @@ Post.propTypes = {
       id: PropTypes.string.isRequired,
     }),
   }).isRequired,
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
-export default Post;
+function mapStateToProps(state, props) {
+  return {
+    post: state.get('posts').get('entities').get(Number(props.match.params.id)),
+    comments: state.get('comments').filter(comment => comment.get('postId') === Number(props.match.params.id)),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);

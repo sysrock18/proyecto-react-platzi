@@ -21,13 +21,19 @@ function setUser(user) {
   };
 }
 
+/* function setSinglePost(post) {
+  return {
+    type: 'SET_SINGLE_POST',
+    payload: post,
+  };
+} */
+
 function postsNextPage() {
   return async (dispatch, getState) => {
     const state = getState();
     const currentPage = state.get('posts').get('page');
 
     const posts = await api.posts.getList(currentPage);
-
     dispatch(setPost(posts));
 
     return posts;
@@ -52,11 +58,32 @@ function loadUser(userId) {
   };
 }
 
+function loadUserPosts(userId) {
+  return async (dispatch) => {
+    const posts = await api.users.getPosts(userId);
+    dispatch(setPost(posts));
+
+    return posts;
+  };
+}
+
+function loadSinglePost(postId) {
+  return async (dispatch) => {
+    const post = await api.posts.getSingle(postId);
+    dispatch(setPost(post));
+
+    return post;
+  };
+}
+
 export default {
   setPost,
   setComments,
   setUser,
+  // setSinglePost,
   postsNextPage,
   loadCommentsForPost,
   loadUser,
+  loadSinglePost,
+  loadUserPosts,
 };

@@ -8,6 +8,7 @@ const initialState = fromJS({
   },
   comments: {},
   users: {},
+  // post: {},
 });
 
 function postsPageReducer(state = initialState.get('posts').get('page'), action = {}) {
@@ -57,10 +58,20 @@ function usersReducer(state = initialState.get('users'), action = {}) {
   }
 }
 
+/* function singlePostReducer(state = initialState.get('post'), action = {}) {
+  switch (action.type) {
+    case 'SET_SINGLE_POST':
+      return state.set(action.payload.id, action.payload.id);
+    default:
+      return state;
+  }
+} */
+
 const reducer = combineReducers({
   posts: postsReducer,
   comments: commentsReducer,
   users: usersReducer,
+  // post: singlePostReducer,
 });
 
 export default reducer;

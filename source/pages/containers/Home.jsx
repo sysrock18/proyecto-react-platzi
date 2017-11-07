@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 
 import Post from '../../posts/containers/Post';
 
-import api from '../../api';
 import actions from '../../actions';
 
 import styles from './Page.css';
@@ -59,7 +58,6 @@ class Home extends Component {
           loading: false,
         });
       } catch (error) {
-        console.error(error);
         this.setState({ loading: false });
       }
     });
@@ -86,8 +84,8 @@ class Home extends Component {
 }
 
 Home.propTypes = {
-  actions: PropTypes.objectOf(PropTypes.func),
-  posts: PropTypes.objectOf(PropTypes.object),
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
+  posts: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 function mapStateToProps(state) {

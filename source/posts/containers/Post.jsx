@@ -30,7 +30,7 @@ class Post extends Component {
       this.props.actions.loadCommentsForPost(this.props.id),
     ]);
 
-    this.setState({
+    return this.setState({
       loading: false,
     });
   }
@@ -85,7 +85,7 @@ Post.propTypes = {
     size: PropTypes.number,
     get: PropTypes.func,
   }),
-  actions: PropTypes.objectOf(PropTypes.func),
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 
 function mapStateToProps(state, props) {
