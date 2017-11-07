@@ -41,6 +41,8 @@ function requestHandler(request, response) {
     title = 'Not Found';
   }
 
+  const preloadedState = store.getState();
+
   response.setHeader('Content-type', 'text/html');
 
   if (context.url) {
@@ -56,6 +58,7 @@ function requestHandler(request, response) {
         title={title}
         content={html}
         domain={domain}
+        preloadedState={preloadedState}
       />,
     ),
   );

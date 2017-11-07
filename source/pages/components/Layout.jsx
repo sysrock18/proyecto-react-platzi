@@ -18,6 +18,9 @@ function Layout(props) {
           }}
         />
         <script src={`${props.domain}/app.js`} />
+        <script>
+          window.__PRELOADED_STATE__ = ${JSON.stringify(props.preloadedState).replace(/</g, '\\u003c')}
+        </script>
       </body>
     </html>
   );
